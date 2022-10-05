@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+## Описание
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Web-страница с формой для заявки. Поля формы: «ФИО конструктора» (выбрать из списка), «Наименование документа» (текст, вводится вручную). Заполнив форму, можно отправить эти данные в Базу Данных. Разные конструкторы могут отправить заявки на один и тот же документ (по наименованию документа) и заявки будут учтены в Базе Данных. Если один и тот же конструктор пытается отправить в Базу Данных заявку на документ повторно (т. е. он ранее отправлял заявку с таким же наименованием документа, и она уже учтена в Базе Данных), то отправка игнорируется – выдается ошибка, что «Вы уже отправляли заявку на этот документ, она уже была учтена». 
 
-## Available Scripts
+Web-страницa с таблицей с полями: «Наименование документа» (текст), «Количество заявок» (число). В таблице отражены текущие данные: на какой документ сколько конструкторов оставили заявки. Таблица отсортирована по полю «Количество заявок» от большего к меньшему.
 
-In the project directory, you can run:
+Войти в систему может только авторизованный пользователь.
 
-### `npm start`
+1. Логин: test@mail.ru
+2. Пароль: qwerty
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Технологии
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. React
+2. TypeScript
+3. Redux (thunk, redux-toolkit)
+4. JSON-server
+5. CSS modules
+6. React-router-dom 6
+7. Axious
+8. Classnames
 
-### `npm test`
+## Что было сделано: 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. JSON-server использовался для создания сервера, к которому будут делаться запросы. Запросы делала с помощью middleware - thunk. Store создавала с помощью Redux-toolkit.
 
-### `npm run build`
+2. Базу данных сформирована в соответствие с потребностями.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Есть поле *authorization* в котором записаны логин и пароль.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Есть поле *name_constructors*, которое содержит массив с именами конструкторов. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Поле *collections*, содержит массив объектов. 
 
-### `npm run eject`
+```
+  {
+      "name": "Иванов И. И.",
+      "document": "ГОСТ 123",
+      "id": "Иванов И. И.ГОСТ 123"
+  }
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Вспомогательная функция api, которая позволят создовать объект axios с нужными заголовками.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+export const api = (): AxiosInstance => {
+  return axios.create({
+    baseURL: getBackendURL(),
+  });
+};
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+В thunk нужно просто вызывать эту функцию. Это позволяет избежать дублирования кода.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Все приложение обернуто в Error Boundary, который рендерит специальный компонент, если возникают ошибки. Это позволяет избежать возможный крах приложения.
 
-## Learn More
+Используется общий компонент для 404 ERROR и для ошибок, которые ловятся в Error Boundary. Этот универсальный компонент принимает разные props и в зависимости от этого отображается нужный текст. Это позволяет избежать дублирования кода.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Приватные роуты.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Есть страница на которой отображаются данные, но эти данные может посмотреть только авторизованный пользователь, если он не авторизован, то его перебрасывает на страницу с авторизацией.
 
-### Code Splitting
+`` <Route path={ROUTES.home.path} element={ <PrivateRoute> <TablePage /> </PrivateRoute> }/> ``
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+В данном примере я оборачиваю компонент TablePage (является страницей) в компонент PrivateRoute, который внутри себя проверяет авторизацию и если ее нет, то на страницу TablePage вход не происходит.
 
-### Analyzing the Bundle Size
+6. TypeScript позволяет использовать Record, что очень удобно при создании роутов, так как мы заранее определяем в объекте какие страницы будут, это позволяет избежать ошибок.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+7. Валидация *input* на ввод неверного пароля или логина. 
 
-### Making a Progressive Web App
+Если вводится неверный логин или пароль, то с помощью classnames меняется стиль input.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+ const className = classnames(styles.wrapper_form, {
+    [styles.error_form]: auth === 'no',
+  });
+```
 
-### Advanced Configuration
+8. Так как в приложении две страницы, то пользователь может зайти только на одну и не зайти на другую, в таком случае нет смысла сразу подгружать эти две страницы.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Использую **React.lazy**, чтобы страница загружалась в том случае, если пользователь на нее зашел. Это позволяет уменьшить размер первоначального bundle и сделать загрузку приложения быстрее. 
 
-### Deployment
+```
+ const FormPostPage = lazy(() => import('pages/FormPostPage'));
+ const TablePage = lazy(() => import('pages/TablePage'));
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+9. Loader при загрузке страницы. 
 
-### `npm run build` fails to minify
+Вместе с **React.lazy** используется **React.Suspense**, у него есть свойство fallback, в которое записывается компонент (или что-то), что будет отражаться пока страница не загрузилась. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+const Loader = () => {
+  return <Spiner />;
+};
+``` 
+
+*Svg* я импортирую как ReactComponent. 
+
+## Как запустить
+
+1. Клонируете репозиторий
+
+`` git clone https://github.com/IrinRer/Form_constructor.git ``
+
+2. Устанавливаете зависимости
+
+`` npm i ``
+
+3. Запускаете проект
+
+`` npm run dev ``
+
+Данная команда запустит также JSON-server.
+
+Версия node: **v14.17.3**.
