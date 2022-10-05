@@ -4,6 +4,7 @@ import  DataReducer from './data/slice';
 
 
 import { IAuthSlice } from './auth/types';
+import { IDataSlice } from './data/types';
 
 
 export const store = configureStore({
@@ -16,7 +17,7 @@ export const store = configureStore({
 
 export type RootState = {
   auth: IAuthSlice;
-  data: any;
+  data: IDataSlice;
 };
 
 export type AppDispatch = typeof store.dispatch;

@@ -1,10 +1,13 @@
+import { dataPostAction, dataFetchAction } from 'store/data/thunk';
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DATA_SLICE_ALIAS } from './types';
+import { DATA_SLICE_ALIAS, ICollectionItem, IDataSlice } from './types';
 import { namesFetchAction } from './thunk';
 
-const initialState: any = {
+const initialState: IDataSlice = {
   names: [],
+  postData: { name: '', document: '' },
+  data: [],
   name: '',
   document: '',
   loading: false,
@@ -15,11 +18,13 @@ export const dataSlice = createSlice({
   name: DATA_SLICE_ALIAS,
   initialState,
   reducers: {
-    setName: (state, action) => {
+    setName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
+      state.postData.name = action.payload;
     },
-    setDocument: (state, action) => {
+    setDocument: (state, action: PayloadAction<string>) => {
       state.document = action.payload;
+      state.postData.document = action.payload;
     },
     clearNameDocument: (state) => {
       state.document = '';
@@ -34,7 +39,7 @@ export const dataSlice = createSlice({
 
     [namesFetchAction.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<Array<string>>,
     ) => {
       state.names = payload;
     },
@@ -45,6 +50,28 @@ export const dataSlice = createSlice({
     ) => {
       state.loading = false;
       state.error = payload;
+      state.names = [];
+    },
+
+    [dataFetchAction.pending.type]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+
+    [dataFetchAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<Array<ICollectionItem>>,
+    ) => {
+      state.data = payload;
+    },
+
+    [dataFetchAction.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+      state.data = [];
     },
   },
 });

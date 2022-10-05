@@ -2,7 +2,12 @@ import ButtonContainer from 'container/AuthContainer/Form/BtnContainer';
 import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import { useAppSelector } from 'hooks/redux/useAppSelector';
 import React from 'react';
-import { getDocument, getName, getNames } from 'store/data/selectors';
+import {
+  getDocument,
+  getName,
+  getNames,
+  isNotUnique,
+} from 'store/data/selectors';
 import { clearNameDocument, setDocument, setName } from 'store/data/slice';
 import { dataPostAction } from 'store/data/thunk';
 import styles from './index.module.scss';
@@ -12,9 +17,10 @@ const FormPost = () => {
   const dispatch = useAppDispatch();
   const name = useAppSelector(getName);
   const document = useAppSelector(getDocument);
+  const isNotUniqueValue = useAppSelector(isNotUnique);
 
   const handleSubmit = () => {
-    if (name && document) {
+    if (name && document && isNotUniqueValue.length === 0) {
       dispatch(dataPostAction({ name, document }));
       dispatch(clearNameDocument());
     }
@@ -44,6 +50,11 @@ const FormPost = () => {
         className={styles.input}
         value={document}
       />
+      {isNotUniqueValue.length !== 0 ? (
+        <p className={styles.p_error}>
+          Вы уже отправляли заявку на этот документ, она уже была учтена
+        </p>
+      ) : null}
       <ButtonContainer action={handleSubmit} text="Готово" />
     </form>
   );
