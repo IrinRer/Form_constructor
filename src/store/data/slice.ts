@@ -65,11 +65,12 @@ export const dataSlice = createSlice({
       state.data = payload;
     },
 
-    [ dataPostAction.fulfilled.type]: (
+    [dataPostAction.fulfilled.type]: (
       state,
       { payload }: PayloadAction<ICollectionItem>,
     ) => {
       state.data.push(payload);
+      state.postData = { name: '', document: '' };
     },
 
     [dataFetchAction.rejected.type]: (

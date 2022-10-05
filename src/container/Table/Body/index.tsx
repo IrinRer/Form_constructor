@@ -1,27 +1,20 @@
 import { useAppSelector } from 'hooks/redux/useAppSelector';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { getCollectionForTable } from 'store/data/selectors';
 
 const TableBody = () => {
   const collection = useAppSelector(getCollectionForTable);
-
-  const getContent = () => {
-    const arr: Array<ReactElement> = [];
-    for (const keyItem in collection) {
-      arr.push(
-        <tr key={keyItem}>
-          <td>{keyItem}</td>
-          <td>{collection[keyItem]}</td>
-        </tr>,
-      );
-    }
-
-    return arr;
-  };
-
-  const data = getContent();
-
-  return <>{data.map((item: ReactElement) => item)}</>;
+  
+  return (
+    <>
+      {collection.map((item) => (
+        <tr key={item.document}>
+          <td>{item.document}</td>
+          <td>{item.num}</td>
+        </tr>
+      ))}
+    </>
+  );
 };
 
 export default TableBody;

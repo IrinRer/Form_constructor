@@ -23,8 +23,6 @@ const FormPost = () => {
   const document = useAppSelector(getDocument);
   const isNotUniqueValue = useAppSelector(isNotUnique);
 
-  console.log(isNotUniqueValue )
-
   useEffect(() => {
     dispatch(namesFetchAction());
     dispatch(dataFetchAction());
@@ -48,7 +46,7 @@ const FormPost = () => {
   return (
     <form className={styles.form}>
       <label>Выберите имя</label>
-      <select onChange={handleSelect} value={name}>
+      <select onChange={handleSelect}>
         {names.map((item: string) => (
           <option value={item} className={styles.option} key={item}>
             {item}

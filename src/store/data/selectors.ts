@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
+import { ICollectionForTable } from './types';
 
 export const getNames = (state: RootState) => state.data.names;
 export const getName = (state: RootState) => state.data.name;
@@ -17,7 +18,7 @@ export const getCollection = (state: RootState) => state.data.data;
 export const getCollectionForTable = createSelector(
   getCollection,
   (collection) => {
-    const obj: any = {};
+    const arr: Array<ICollectionForTable> = [];
 
     for (const item1 of collection) {
       let num = 0;
@@ -26,8 +27,15 @@ export const getCollectionForTable = createSelector(
           num += 1;
         }
       }
-      obj[item1.document] = num;
+
+      arr.push({ document: item1.document, num });
     }
-    return obj;
+
+    return arr
+      .filter(
+        (item: ICollectionForTable, i: number) =>
+          arr.findIndex((a: any) => a.document === item.document) === i,
+      )
+      .sort((a: ICollectionForTable, b: ICollectionForTable) => b.num - a.num);
   },
 );

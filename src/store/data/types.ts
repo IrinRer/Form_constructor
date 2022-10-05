@@ -10,6 +10,11 @@ export interface ICollectionItem {
     id?: string | number;
 }
 
+export interface ICollectionForTable {
+    document: string;
+    num: number;
+}
+
 export interface IDataSlice {
     names: Array<string>,
     postData: ICollectionItem,
