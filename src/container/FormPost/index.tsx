@@ -1,7 +1,7 @@
 import ButtonContainer from 'container/AuthContainer/Form/BtnContainer';
 import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import { useAppSelector } from 'hooks/redux/useAppSelector';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   getDocument,
   getName,
@@ -9,11 +9,7 @@ import {
   isNotUnique,
 } from 'store/data/selectors';
 import { clearNameDocument, setDocument, setName } from 'store/data/slice';
-import {
-  dataFetchAction,
-  dataPostAction,
-  namesFetchAction,
-} from 'store/data/thunk';
+import { dataPostAction } from 'store/data/thunk';
 import styles from './index.module.scss';
 
 const FormPost = () => {
@@ -22,11 +18,6 @@ const FormPost = () => {
   const name = useAppSelector(getName);
   const document = useAppSelector(getDocument);
   const isNotUniqueValue = useAppSelector(isNotUnique);
-
-  useEffect(() => {
-    dispatch(namesFetchAction());
-    dispatch(dataFetchAction());
-  }, [dispatch]);
 
   const handleSubmit = () => {
     if (name && document && isNotUniqueValue.length === 0) {
