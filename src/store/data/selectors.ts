@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 
 export const getNames = (state: RootState) => state.data.names;
@@ -11,3 +12,22 @@ export const isNotUnique = (state: RootState) => {
     );
   });
 };
+export const getCollection = (state: RootState) => state.data.data;
+
+export const getCollectionForTable = createSelector(
+  getCollection,
+  (collection) => {
+    const obj: any = {};
+
+    for (const item1 of collection) {
+      let num = 0;
+      for (const item2 of collection) {
+        if (item1.document === item2.document) {
+          num += 1;
+        }
+      }
+      obj[item1.document] = num;
+    }
+    return obj;
+  },
+);

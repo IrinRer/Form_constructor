@@ -1,0 +1,23 @@
+@import 'styles/color.scss';
+
+.table {
+  width: 50%;
+  border-collapse: collapse;
+  border: 2px solid $blue-water;
+  margin: 50px auto;
+  border-radius: 5px;
+
+  th {
+    font-weight: bold;
+    padding: 5px;
+    color: black;
+    border: 2px solid $blue-water;
+  }
+
+  td {
+    border: 2px solid $blue-water;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+}

@@ -1,4 +1,4 @@
-import { dataFetchAction } from 'store/data/thunk';
+import { dataFetchAction, dataPostAction } from 'store/data/thunk';
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DATA_SLICE_ALIAS, ICollectionItem, IDataSlice } from './types';
@@ -63,6 +63,13 @@ export const dataSlice = createSlice({
       { payload }: PayloadAction<Array<ICollectionItem>>,
     ) => {
       state.data = payload;
+    },
+
+    [ dataPostAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ICollectionItem>,
+    ) => {
+      state.data.push(payload);
     },
 
     [dataFetchAction.rejected.type]: (

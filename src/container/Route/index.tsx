@@ -1,7 +1,8 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Error from 'component/Common/Error';
-import FormPost from 'container/FormPost';
+import FormPostPage from 'pages/FormPostPage';
+import TablePage from 'pages/TablePage';
 import Header from 'container/Header';
 import AuthPage from 'pages/Auth';
 import { useAuth } from 'hooks/useAuth';
@@ -21,7 +22,15 @@ const CreateRoutes: React.FC = () => {
             path={ROUTES.form.path}
             element={
               <PrivateRoute>
-                <FormPost />
+                <FormPostPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.table.path}
+            element={
+              <PrivateRoute>
+                <TablePage />
               </PrivateRoute>
             }
           />

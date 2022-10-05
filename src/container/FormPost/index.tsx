@@ -23,6 +23,8 @@ const FormPost = () => {
   const document = useAppSelector(getDocument);
   const isNotUniqueValue = useAppSelector(isNotUnique);
 
+  console.log(isNotUniqueValue )
+
   useEffect(() => {
     dispatch(namesFetchAction());
     dispatch(dataFetchAction());
