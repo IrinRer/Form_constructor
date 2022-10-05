@@ -35,12 +35,14 @@ const FormPost = () => {
     }
   };
 
-  const handleSelect = (e) => {
-    dispatch(setName(e.target.value));
+  const handleSelect = (e: React.FormEvent<EventTarget>) => {
+    const target = e.target as HTMLInputElement;
+    dispatch(setName(target.value));
   };
 
-  const handleChange = (e) => {
-    dispatch(setDocument(e.target.value));
+  const handleChange = (e: React.FormEvent<EventTarget>) => {
+    const target = e.target as HTMLInputElement;
+    dispatch(setDocument(target.value));
   };
 
   return (

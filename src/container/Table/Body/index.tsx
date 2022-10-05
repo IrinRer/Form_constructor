@@ -4,7 +4,7 @@ import { getCollectionForTable } from 'store/data/selectors';
 
 const TableBody = () => {
   const collection = useAppSelector(getCollectionForTable);
-  
+
   return (
     <>
       {collection.map((item) => (

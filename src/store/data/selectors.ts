@@ -34,7 +34,9 @@ export const getCollectionForTable = createSelector(
     return arr
       .filter(
         (item: ICollectionForTable, i: number) =>
-          arr.findIndex((a: any) => a.document === item.document) === i,
+          arr.findIndex(
+            (a: ICollectionForTable) => a.document === item.document,
+          ) === i,
       )
       .sort((a: ICollectionForTable, b: ICollectionForTable) => b.num - a.num);
   },
