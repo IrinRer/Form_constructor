@@ -21,6 +21,10 @@ export const dataSlice = createSlice({
     setDocument: (state, action) => {
       state.document = action.payload;
     },
+    clearNameDocument: (state) => {
+      state.document = '';
+      state.name = '';
+    },
   },
   extraReducers: {
     [namesFetchAction.pending.type]: (state) => {
@@ -45,5 +49,5 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { setName, setDocument } = dataSlice.actions;
+export const { setName, setDocument, clearNameDocument } = dataSlice.actions;
 export default dataSlice.reducer;
