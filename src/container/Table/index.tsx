@@ -7,8 +7,8 @@ const Table = () => {
     <table className={styles.table}>
       <thead>
         <tr>
-          <th>Название Документа</th>
-          <th>Количество</th>
+          <th>Наименование документа</th>
+          <th>Количество заявок</th>
         </tr>
       </thead>
       <tbody>

@@ -38,19 +38,24 @@ const FormPost = () => {
 
   return (
     <form className={styles.form}>
-      <label>Выберите имя</label>
+      <h2>Оставьте свою заявку</h2>
+      
+      <label>ФИО конструктора</label>
       <select onChange={handleSelect}>
+        <option value="default">--Выберите имя--</option>
         {names.map((item: string) => (
           <option value={item} className={styles.option} key={item}>
             {item}
           </option>
         ))}
       </select>
+      <label>Наименование документа</label>
       <input
         type="text"
         onChange={handleChange}
         className={styles.input}
         value={document}
+        placeholder='Введите название документа'
       />
       {isNotUniqueValue.length !== 0 ? (
         <p className={styles.p_error}>
