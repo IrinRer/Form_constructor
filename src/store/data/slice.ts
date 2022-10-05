@@ -1,11 +1,12 @@
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DATA_SLICE_ALIAS } from './types';
-import { dataFetchAction } from './thunk';
-
+import { namesFetchAction } from './thunk';
 
 const initialState: any = {
   names: [],
+  name: '',
+  document: '',
   loading: false,
   error: null,
 };
@@ -13,21 +14,28 @@ const initialState: any = {
 export const dataSlice = createSlice({
   name: DATA_SLICE_ALIAS,
   initialState,
-  reducers: {},
+  reducers: {
+    setName: (state, action) => {
+      state.name = action.payload;
+    },
+    setDocument: (state, action) => {
+      state.document = action.payload;
+    },
+  },
   extraReducers: {
-    [dataFetchAction.pending.type]: (state) => {
+    [namesFetchAction.pending.type]: (state) => {
       state.loading = true;
       state.error = null;
     },
 
-    [dataFetchAction.fulfilled.type]: (
+    [namesFetchAction.fulfilled.type]: (
       state,
       { payload }: PayloadAction<any>,
     ) => {
-      state.names = payload.name_constructors
+      state.names = payload;
     },
 
-    [dataFetchAction.rejected.type]: (
+    [namesFetchAction.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
@@ -37,10 +45,5 @@ export const dataSlice = createSlice({
   },
 });
 
-// export const {
-//   authorization,
-//   resetAuthorization,
-//   changeInputLogin,
-//   changeInputPassword,
-// } = authorizationSlice.actions;
+export const { setName, setDocument } = dataSlice.actions;
 export default dataSlice.reducer;

@@ -1,0 +1,23 @@
+@import 'styles/color.scss';
+@import 'styles/mixins.scss';
+
+.form {
+  padding: 20px 10px 10px 10px;
+  text-align: center;
+  color: black;
+  font-weight: 800;
+  max-width: 400px;
+  margin: 100px auto;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 5px solid $blue-water;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+
+  select {
+    padding: 10px;
+    cursor: pointer;
+  }
+}

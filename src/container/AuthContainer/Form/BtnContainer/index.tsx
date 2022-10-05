@@ -1,18 +1,19 @@
 import React from 'react';
-import { useAppDispatch } from 'hooks/redux/useAppDispatch';
-import { authorization } from 'store/auth/slice';
 import styles from './index.module.scss';
 
-const ButtonContainer = () => {
-  const dispatch = useAppDispatch();
+interface IProps {
+  action: (arg1?: string, arg2?: string) => void;
+  text?: string;
+}
 
+const ButtonContainer: React.FC<IProps> = ({ action, text }) => {
   const handleSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    dispatch(authorization());
+    action();
   };
   return (
     <button type="submit" onClick={handleSubmit} className={styles.btn}>
-      Login in
+      {text}
     </button>
   );
 };

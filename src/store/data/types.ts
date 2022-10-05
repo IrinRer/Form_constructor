@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 
 export const DATA_SLICE_ALIAS = 'data';
+export const NAMES_SLICE_ALIAS = 'names';
 
 // export interface IDataSlice {
 //   auth: string;

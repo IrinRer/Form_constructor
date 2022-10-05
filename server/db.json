@@ -3,7 +3,21 @@
     "login": "test@mail.ru",
     "password": "qwerty"
   },
-  "data": {
-    "name_constructors": ["Иванов И. И.", "Петров П. П", "Сидоров С. С"]
-  }
+  "name_constructors": [
+    "Иванов И. И.",
+    "Петров П. П",
+    "Сидоров С. С"
+  ],
+  "collection": [
+    {
+      "id": 1,
+      "name": "Джеймс Смит",
+      "document": "Об обучении"
+    },
+    {
+      "id": 2,
+      "name": "Джеймс Лерой",
+      "document": "О работе"
+    }
+  ]
 }

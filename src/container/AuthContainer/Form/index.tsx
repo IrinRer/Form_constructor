@@ -1,6 +1,10 @@
 import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import { useAppSelector } from 'hooks/redux/useAppSelector';
-import { changeInputLogin, changeInputPassword } from 'store/auth/slice';
+import {
+  authorization,
+  changeInputLogin,
+  changeInputPassword,
+} from 'store/auth/slice';
 import React from 'react';
 import { getAuth, getLogin, getPassword } from 'store/auth/selectors';
 import classnames from 'classnames';
@@ -24,6 +28,9 @@ const Form = () => {
   const handleChangePassword = (e: React.FormEvent<EventTarget>) => {
     const target = e.target as HTMLInputElement;
     dispatch(changeInputPassword(target.value));
+  };
+  const handleSubmit = () => {
+    dispatch(authorization());
   };
 
   return (
@@ -49,7 +56,7 @@ const Form = () => {
           className={styles.input}
         />
       </label>
-      <ButtonContainer />
+      <ButtonContainer action={handleSubmit} text="Войти" />
     </form>
   );
 };

@@ -1,15 +1,16 @@
+import FormPost from 'container/FormPost';
 import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import React, { useEffect } from 'react';
-import { dataFetchAction } from 'store/data/thunk';
+import { namesFetchAction } from 'store/data/thunk';
 
 const Home = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(dataFetchAction());
+    dispatch(namesFetchAction());
   }, [dispatch]);
 
-  return <p>home</p>;
+  return <FormPost/>;
 };
 
 export default Home;
