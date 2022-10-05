@@ -2,5 +2,8 @@
   "authorization": {
     "login": "test@mail.ru",
     "password": "qwerty"
+  },
+  "data": {
+    "name_constructors": ["Иванов И. И.", "Петров П. П", "Сидоров С. С"]
   }
 }
