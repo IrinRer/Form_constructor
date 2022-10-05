@@ -1,4 +1,4 @@
-import { dataPostAction, dataFetchAction } from 'store/data/thunk';
+import { dataFetchAction } from 'store/data/thunk';
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DATA_SLICE_ALIAS, ICollectionItem, IDataSlice } from './types';

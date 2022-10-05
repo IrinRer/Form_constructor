@@ -1,4 +1,4 @@
-type TRouteNames = 'auth' | 'home' | 'notFound';
+type TRouteNames = 'auth' | 'form' | 'table' | 'notFound';
 
 interface IRoute {
   path: string;
@@ -7,11 +7,18 @@ interface IRoute {
 }
 
 export const ROUTES: Record<TRouteNames, IRoute> = {
-  home: {
+  form: {
     path: '/',
     route: '/',
-    name: 'Home',
+    name: 'Форма для заявки',
   },
+
+  table: {
+    path: '/table',
+    route: '/table',
+    name: 'Сводная таблица',
+  },
+
   auth: {
     path: '/auth',
     route: '/auth',

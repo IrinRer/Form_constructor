@@ -1,22 +1,27 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Error from 'component/Common/Error';
+import FormPost from 'container/FormPost';
+import Header from 'container/Header';
 import AuthPage from 'pages/Auth';
-import Home from 'pages/Home';
+import { useAuth } from 'hooks/useAuth';
 import ErrorBoundary from 'component/Common/ErrorBoundary';
 import { ROUTES } from 'constants/route';
 import PrivateRoute from './PrivateRoutes';
 
 const CreateRoutes: React.FC = () => {
+  const { isAuth } = useAuth();
+
   return (
     <BrowserRouter>
       <ErrorBoundary>
+        {isAuth ? <Header /> : null}
         <Routes>
           <Route
-            path={ROUTES.home.path}
+            path={ROUTES.form.path}
             element={
               <PrivateRoute>
-                <Home />
+                <FormPost />
               </PrivateRoute>
             }
           />
